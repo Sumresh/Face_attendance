@@ -17,14 +17,14 @@ while True:
     for (x,y,w,h) in faces:
         crp_img=frame[y:y+h,x:x+w,:]
         resized_img=cv2.resize(crp_img,(50,50))
-        if len(faces_data)<=10 and i%10==0:
+        if len(faces_data)<=100 and i%10==0:
             faces_data.append(resized_img)
         i=i+1
         cv2.putText(frame,str(len(faces_data)),(50,50),cv2.FONT_HERSHEY_COMPLEX,1,(50,50,250),2)
         cv2.rectangle(frame,(x,y),(x+w,y+h),(50,50,250),2)
     cv2.imshow("frame",frame)
     k=cv2.waitKey(1)
-    if k==ord('q') or len(faces_data)==10:
+    if k==ord('q') or len(faces_data)==100:
         break
 video.release()
 cv2.destroyAllWindows()
@@ -33,16 +33,16 @@ faces_data=np.asarray(faces_data)
 faces_data=faces_data.reshape(100,-1)
 # print(faces_data)
 if 'names.pkl' not in os.listdir('Face_attendance/'):
-    names=[name]*10
+    names=[name]*100
     with open('Face_attendance/names.pkl','wb') as f:
-        pickle.dump(faces_data,f)
+        pickle.dump(names,f)
 else:
     with open('Face_attendance/names.pkl','rb') as f:
       names= pickle.load(f)
       print(type(names))
-    names=names +[name]*10
+    names=names +[name]*100
     with open('Face_attendance/names.pkl','wb') as f:
-        pickle.dump(faces_data,f)
+        pickle.dump(names,f)
 
 
 
@@ -55,7 +55,7 @@ else:
       faces= pickle.load(f)
     faces=np.append(faces,faces_data,axis=0)
     with open('Face_attendance/faces_data.pkl','wb') as f:
-        pickle.dump(faces,f)
+        pickle.dump(faces_data,f)
 
 
 
