@@ -9,7 +9,7 @@ import time
 from datetime import datetime
 
 video=cv2.VideoCapture(1)
-facedetect=cv2.CascadeClassifier("C:\Sumresh N\Aiml prepration\Face_regonition\Face_attendance\data\haarcascade_frontalface_default.xml")
+facedetect=cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
 
 import pickle as pkl
 import pandas as pd
