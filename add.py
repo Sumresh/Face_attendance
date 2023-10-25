@@ -3,8 +3,8 @@ import pickle
 import numpy as np
 import os
 
-video=cv2.VideoCapture(0)
-facedetect=cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
+video=cv2.VideoCapture(1)
+facedetect=cv2.CascadeClassifier("C:\Sumresh N\Aiml prepration\Face_regonition\Face_attendance\data\haarcascade_frontalface_default.xml")
 
 faces_data=[]
 i=0
@@ -32,32 +32,27 @@ cv2.destroyAllWindows()
 faces_data=np.asarray(faces_data)
 faces_data=faces_data.reshape(100,-1)
 # print(faces_data)
-if 'names.pkl' not in os.listdir('Face_attendance/'):
+if 'names.pkl' not in os.listdir('data/'):
     names=[name]*100
-    with open('Face_attendance/names.pkl','wb') as f:
+    with open('data/names.pkl','wb') as f:
         pickle.dump(names,f)
 else:
-    with open('Face_attendance/names.pkl','rb') as f:
+    with open('data/names.pkl','rb') as f:
       names= pickle.load(f)
       print(type(names))
-    names=names +[name]*100
-    with open('Face_attendance/names.pkl','wb') as f:
+    names=names + [name]*100
+    with open('data/names.pkl','wb') as f:
         pickle.dump(names,f)
 
 
 
 
-if 'faces_data.pkl' not in os.listdir('Face_attendance/'):
-    with open('Face_attendance/faces_data.pkl','wb') as f:
+if 'faces_data.pkl' not in os.listdir('data/'):
+    with open('data/faces_data.pkl','wb') as f:
         pickle.dump(faces_data,f)
 else:
-    with open('Face_attendance/faces_data.pkl','rb') as f:
+    with open('data/faces_data.pkl','rb') as f:
       faces= pickle.load(f)
-    faces=np.append(faces,faces_data,axis=0)
-    with open('Face_attendance/faces_data.pkl','wb') as f:
-        pickle.dump(faces_data,f)
-
-
-
-
-        
+    faces=np.vstack([faces, faces_data])
+    with open('data/faces_data.pkl','wb') as f:
+        pickle.dump(faces,f)
